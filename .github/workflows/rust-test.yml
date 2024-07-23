@@ -1,0 +1,67 @@
+name: Test
+
+on:
+  workflow_call:
+    secrets:
+      CODECOV_TOKEN:
+        description: "Token for codecov.io"
+        required: true
+
+# ensure that the workflow is only triggered once per PR, subsequent pushes to the PR will cancel
+# and restart the workflow. See https://docs.github.com/en/actions/using-jobs/using-concurrency
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: stable / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install cargo-nextest
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-nextest
+      - name: Run cargo test
+        run: cargo nextest run --workspace --all-targets --all-features --locked
+
+  coverage:
+    name: stable / coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+      - name: Install cargo-nextest
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-nextest
+      - name: Run cargo-nextest
+        run: cargo nextest run --workspace --all-targets --all-features --locked
+        env:
+          RUSTFLAGS: -Cinstrument-coverage
+      - name: Generate lcov
+        run: |
+          curl -fsSL https://github.com/mozilla/grcov/releases/latest/download/grcov-x86_64-unknown-linux-gnu.tar.bz2 | tar jxf -
+          ./grcov . --binary-path ./target/debug/ -s . -t lcov --branch --ignore-not-existing --ignore "/*" -o lcov.info
+      - name: Upload to codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: lcov.info
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}

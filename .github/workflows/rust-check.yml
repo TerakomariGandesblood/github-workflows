@@ -7,6 +7,10 @@ on:
         description: "The minimal supported Rust version"
         required: true
         type: string
+      run_doc_check:
+        description: "Whether to test the build documentation"
+        required: true
+        type: boolean
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -94,6 +98,7 @@ jobs:
 
   doc:
     name: nightly / doc
+    if: ${{ inputs.run_doc_check }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

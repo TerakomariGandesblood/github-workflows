@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Run commitlint
         uses: wagoid/commitlint-github-action@v6
 
@@ -34,6 +36,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Cache Cargo dependencies
         uses: Swatinem/rust-cache@v2
       - name: Install Rust toolchain
@@ -51,6 +55,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Cache Cargo dependencies
         uses: Swatinem/rust-cache@v2
       - name: Install Rust toolchain
@@ -68,6 +74,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Cache Cargo dependencies
         uses: Swatinem/rust-cache@v2
       - name: Install Rust toolchain
@@ -85,6 +93,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Cache Cargo dependencies
         uses: Swatinem/rust-cache@v2
       - name: Install Rust toolchain
@@ -103,6 +113,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Cache Cargo dependencies
         uses: Swatinem/rust-cache@v2
       - name: Install Rust toolchain
@@ -118,6 +130,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Cache Cargo dependencies
         uses: Swatinem/rust-cache@v2
       - name: Install Rust toolchain

@@ -17,10 +17,7 @@ jobs:
         with:
           submodules: recursive
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          version: "latest"
-          enable-cache: true
+        uses: astral-sh/setup-uv@v6
       - name: Set up Python
         run: uv python install
       - name: Install the project
@@ -37,10 +34,7 @@ jobs:
         with:
           submodules: recursive
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          version: "latest"
-          enable-cache: true
+        uses: astral-sh/setup-uv@v6
       - name: Set up Python
         run: uv python install
       - name: Install the project
@@ -57,10 +51,7 @@ jobs:
         with:
           submodules: recursive
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          version: "latest"
-          enable-cache: true
+        uses: astral-sh/setup-uv@v6
       - name: Set up Python
         run: uv python install
       - name: Install the project

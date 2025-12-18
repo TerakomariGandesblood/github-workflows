@@ -42,8 +42,8 @@ jobs:
       - name: Run ruff check
         run: uv run --frozen ruff check
 
-  pyright:
-    name: pyright
+  ty:
+    name: ty
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -56,5 +56,5 @@ jobs:
         run: uv python install
       - name: Install the project
         run: uv sync --all-extras --dev
-      - name: Run pyright
-        run: uv run --frozen pyright
+      - name: Run ty
+        run: uv run --frozen ty check --error-on-warning

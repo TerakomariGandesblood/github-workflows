@@ -51,7 +51,7 @@ jobs:
       - name: Run clippy action
         uses: clechasseur/rs-clippy-check@v5
         with:
-          args: --workspace --all-targets --all-features -- --deny warnings
+          args: --workspace --all-targets --all-features --locked -- --deny warnings
 
   deny:
     name: stable / deny
@@ -70,7 +70,7 @@ jobs:
         with:
           tool: cargo-deny
       - name: Run cargo-deny
-        run: cargo deny --workspace --all-features check
+        run: cargo deny --workspace --all-features --locked check
 
   doc:
     name: nightly / doc
@@ -88,7 +88,7 @@ jobs:
         with:
           components: rust-docs
       - name: Run rustdoc checks
-        run: cargo +nightly rustdoc --all-features -- -Zunstable-options --check --deny warnings
+        run: cargo +nightly rustdoc --all-features --locked -- -Zunstable-options --check --deny warnings
 
   msrv:
     name: ${{ inputs.msrv }} / check
@@ -105,4 +105,4 @@ jobs:
         with:
           toolchain: ${{ inputs.msrv }}
       - name: Run cargo check
-        run: cargo check --workspace --all-targets --all-features
+        run: cargo check --workspace --all-targets --all-features --locked

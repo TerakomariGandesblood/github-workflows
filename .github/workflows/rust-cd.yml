@@ -24,6 +24,8 @@ jobs:
           submodules: recursive
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
       - name: Upload rust binary
         uses: taiki-e/upload-rust-binary-action@v1
         with:

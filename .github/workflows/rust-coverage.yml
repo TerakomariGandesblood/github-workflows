@@ -26,6 +26,8 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
       - name: Install cargo-nextest
         uses: taiki-e/install-action@v2
         with:

@@ -19,7 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          fetch-depth: 0
           submodules: recursive
+          persist-credentials: false
       - name: Cache Cargo dependencies
         uses: Swatinem/rust-cache@v2
       - name: Install Rust toolchain

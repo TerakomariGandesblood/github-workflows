@@ -1,0 +1,42 @@
+name: Check
+
+on:
+  workflow_call:
+    inputs:
+      markdown_globs:
+        description: "Globs for markdowns"
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  autocorrect:
+    name: autocorrect
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          persist-credentials: false
+      - name: AutoCorrect
+        uses: huacnlee/autocorrect-action@main
+
+  markdownlint:
+    name: markdownlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          persist-credentials: false
+      - name: Markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v22
+        with:
+          globs: ${{ inputs.markdown_globs }}

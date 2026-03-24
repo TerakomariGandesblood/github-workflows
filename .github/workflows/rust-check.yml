@@ -33,8 +33,6 @@ jobs:
         uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
       - name: Run cargo fmt
         run: cargo +nightly fmt --check --all
 
@@ -54,8 +52,6 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
       - name: Run clippy action
         uses: clechasseur/rs-clippy-check@v5
         with:
@@ -75,8 +71,6 @@ jobs:
         uses: Swatinem/rust-cache@v2
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
       - name: Install cargo-deny
         uses: taiki-e/install-action@v2
         with:
@@ -101,8 +95,6 @@ jobs:
         uses: dtolnay/rust-toolchain@nightly
         with:
           components: rust-docs
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
       - name: Run rustdoc checks
         run: cargo +nightly rustdoc --all-features --locked -- -Zunstable-options --check --deny warnings
 
@@ -122,7 +114,5 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ inputs.msrv }}
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
       - name: Run cargo check
         run: cargo check --workspace --all-targets --all-features --locked

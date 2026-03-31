@@ -37,6 +37,6 @@ jobs:
           submodules: recursive
           persist-credentials: false
       - name: Markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v22
+        uses: DavidAnson/markdownlint-cli2-action@v23
         with:
           globs: ${{ inputs.markdown_globs }}

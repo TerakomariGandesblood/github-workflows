@@ -35,6 +35,10 @@ jobs:
           components: rustfmt
       - name: Run cargo fmt
         run: cargo +nightly fmt --check --all
+      - name: Setup Biome CLI
+        uses: biomejs/setup-biome@v2
+      - name: Run Biome
+        run: biome ci
 
   clippy:
     name: stable / clippy
@@ -72,7 +76,7 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
       - name: Install cargo-deny
-        uses: taiki-e/install-action@v2.90.2
+        uses: taiki-e/install-action@v2
         with:
           tool: cargo-deny
       - name: Run cargo-deny

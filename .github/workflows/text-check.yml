@@ -2,11 +2,6 @@ name: Check
 
 on:
   workflow_call:
-    inputs:
-      markdown_globs:
-        description: "Globs for markdowns"
-        required: true
-        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -24,10 +19,10 @@ jobs:
           submodules: recursive
           persist-credentials: false
       - name: AutoCorrect
-        uses: huacnlee/autocorrect-action@main
+        uses: huacnlee/autocorrect-action@v2
 
-  markdownlint:
-    name: markdownlint
+  biome:
+    name: biome
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -36,7 +31,7 @@ jobs:
           fetch-depth: 0
           submodules: recursive
           persist-credentials: false
-      - name: Markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v25.0.0
-        with:
-          globs: ${{ inputs.markdown_globs }}
+      - name: Setup Biome CLI
+        uses: biomejs/setup-biome@v2
+      - name: Run Biome
+        run: biome ci
